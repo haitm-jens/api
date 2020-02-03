@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  golang:
+    container_name: go-api
+    build:
+       context: .
+       dockerfile: docker/golang/Dockerfile
+    ports:
+      - 4001:4000
+    volumes:
+      - .:/app/
+    # command: tail -f /dev/null
+    command: watcher -c config -h localhost
+    # command: go run main.go
+
+    working_dir: /app/src
+    tty: true
+  db:
+    container_name: go-db
+    image: mysql:5.7.22
+    volumes:
+      - ./docker/mysql/:/docker-entrypoint-initdb.d/
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./tmp/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=go-api
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 33306:3306

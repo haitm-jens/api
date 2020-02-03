@@ -1,0 +1,6 @@
+docker exec mall-db /usr/bin/mysqldump -u root mall > mall.sql
+docker exec -i admin-db mysql -uroot mall < mall.sql
+
+// inside container
+go get github.com/canthefason/go-watcher
+go install github.com/canthefason/go-watcher/cmd/watcher
