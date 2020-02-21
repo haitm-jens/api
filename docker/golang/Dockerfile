@@ -13,5 +13,5 @@ LABEL maintainer="j3ns789@gmail.com"
 
 WORKDIR /app
 
-ENV GOPATH="/app/vendor"
-ENV PATH="${GOPATH}/bin:${PATH}"
+ENV GOPATH /app/vendor
+ENV PATH ${GOPATH}/bin:${PATH}

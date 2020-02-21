@@ -1,0 +1,7 @@
+{
+  "domain": "domain",
+  "app": {
+    "port": 4000,
+    "name": "pandog"
+  }
+}
