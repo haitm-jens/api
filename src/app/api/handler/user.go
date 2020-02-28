@@ -9,16 +9,16 @@ import (
 
 type (
 	User struct {
-		uc usecase.User
+		Uc usecase.User
 	}
 )
 
-func NewUser(u usecase.User) *User {
-	return &User{uc: u}
+func NewUser(u usecase.User) User {
+	return User{Uc: u}
 }
 
 func (u *User) Get(c *gin.Context) {
-	u.uc.Get()
+	u.Uc.Get(3)
 	c.JSON(http.StatusOK, gin.H{
 		"result": "true",
 	})

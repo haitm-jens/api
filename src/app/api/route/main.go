@@ -1,27 +1,39 @@
 package route
 
 import (
-	v1 "pandog/app/api/route/v1"
+	"strings"
+
+	"pandog/app/api/wire"
 	server "pandog/infra/server"
 	database "pandog/interface/infra/db"
-
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 type (
-	router struct{}
+	Router struct {
+		db database.MySQL
+	}
 )
 
-func NewRouter() *router {
-	return &router{}
+func NewRouter(db database.MySQL) Router {
+	return Router{db: db}
 }
 
-func (*router) Apply(app *gin.Engine, db database.MySQL) {
-	r := collect(db)
+func (s Router) Apply(app *gin.Engine) {
+	r := s.collect()
 
 	make(app, r)
+}
+
+func (s Router) collect() []server.Route {
+	r := []server.Route{}
+
+	u := wire.UserRoutLoader(s.db)
+
+	r = append(r, (u.Route())...)
+
+	return r
 }
 
 func make(app *gin.Engine, routes []server.Route) {
@@ -37,13 +49,4 @@ func make(app *gin.Engine, routes []server.Route) {
 		default:
 		}
 	}
-}
-
-func collect(db database.MySQL) []server.Route {
-	r := []server.Route{}
-
-	r = append(r, (v1.NewCommon(db).Route())...)
-	r = append(r, (v1.NewUser(db).Route())...)
-	r = append(r, (v1.NewAuth(db).Route())...)
-	return r
 }

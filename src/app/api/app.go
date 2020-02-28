@@ -1,18 +1,16 @@
 package api
 
 import (
-	"fmt"
 	"log"
 	"path"
 	"runtime"
 
 	"pandog/app/api/lib"
+	route "pandog/app/api/route"
+	"pandog/infra/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-
-	route "pandog/app/api/route"
-	"pandog/infra/db"
 )
 
 func Dispatch() {
@@ -33,8 +31,9 @@ func Dispatch() {
 	db := db.NewMySQL(dbc)
 	defer db.Disconnect()
 
-	r := route.NewRouter()
-	r.Apply(server, db)
+	r := route.NewRouter(db)
+
+	r.Apply(server)
 
 	loadConfig()
 	c := lib.NewConfig()
@@ -46,7 +45,8 @@ func Dispatch() {
 func loadConfig() {
 	_, filename, _, _ := runtime.Caller(1)
 	filepath := path.Join(path.Dir(filename))
-	fmt.Println(filepath)
+
+	// fmt.Println(filepath)
 	viper.AddConfigPath(filepath + "/config/common")
 	viper.SetConfigName("app")
 	if err := viper.MergeInConfig(); err != nil {

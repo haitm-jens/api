@@ -4,10 +4,10 @@ import (
 	domain "pandog/domain"
 )
 
-func (u *User) Get() {
+func (u *User) Get(id int) {
 	domain := new(domain.User)
 
 	u.Db.
-		Where("id = 2").
+		Where("id = ?", id).
 		Find(domain)
 }

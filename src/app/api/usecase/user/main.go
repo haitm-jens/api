@@ -8,6 +8,6 @@ type User struct {
 	Db database.MySQL
 }
 
-func NewUser(db database.MySQL) *User {
-	return &User{Db: db}
+func NewUser(db database.MySQL) User {
+	return User{Db: db}
 }
