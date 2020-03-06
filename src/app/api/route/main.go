@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"pandog/app/api/wire"
-	server "pandog/infra/server"
+	server "pandog/infra/local/server"
 	database "pandog/interface/infra/db"
 
 	"github.com/gin-gonic/gin"
@@ -29,9 +29,11 @@ func (s Router) Apply(app *gin.Engine) {
 func (s Router) collect() []server.Route {
 	r := []server.Route{}
 
-	u := wire.UserRoutLoader(s.db)
+	user := wire.UserRouterLoader(s.db)
+	auth := wire.AuthRouterLoader(s.db)
 
-	r = append(r, (u.Route())...)
+	r = append(r, (user.Route())...)
+	r = append(r, (auth.Route())...)
 
 	return r
 }

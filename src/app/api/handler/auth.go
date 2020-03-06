@@ -13,11 +13,11 @@ type (
 	}
 )
 
-func NewAuth(u usecase.User) *Auth {
-	return &Auth{uc: u}
+func NewAuth(u usecase.User) Auth {
+	return Auth{uc: u}
 }
 
-func (u *Auth) Login(c *gin.Context) {
+func (s *Auth) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"result": "post auth",
 	})

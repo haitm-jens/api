@@ -1,7 +1,6 @@
 {
-  "domain": "domain",
   "app": {
-    "port": 4000,
-    "name": "pandog"
+    "mode": 1,
+    "port": 4000
   }
 }

@@ -2,7 +2,7 @@ package v1
 
 import (
 	"pandog/app/api/handler"
-	server "pandog/infra/server"
+	server "pandog/infra/local/server"
 )
 
 type (

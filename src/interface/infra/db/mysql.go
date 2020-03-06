@@ -1,7 +1,7 @@
 package db
 
 import (
-	"pandog/infra/db"
+	"pandog/infra/local/db"
 )
 
 type MySQL interface {
