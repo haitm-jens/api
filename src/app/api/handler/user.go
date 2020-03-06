@@ -18,14 +18,7 @@ func NewUser(u usecase.User) User {
 }
 
 func (u *User) Get(c *gin.Context) {
-	u.Uc.Get(3)
 	c.JSON(http.StatusOK, gin.H{
-		"result": "true",
-	})
-}
-
-func (u *User) Pandog(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"result": "pandog",
+		"me": "me",
 	})
 }

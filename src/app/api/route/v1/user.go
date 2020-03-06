@@ -19,11 +19,6 @@ func (s *User) Route() []server.Route {
 	return []server.Route{
 		server.Route{
 			Method:   "GET",
-			URL:      "users/pandog",
-			Business: s.handler.Pandog,
-		},
-		server.Route{
-			Method:   "GET",
 			URL:      "users/me",
 			Business: s.handler.Get,
 		},

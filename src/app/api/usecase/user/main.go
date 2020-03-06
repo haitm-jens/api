@@ -1,13 +1,23 @@
 package user
 
 import (
-	database "pandog/interface/infra/db"
+	"pandog/repo"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	Db database.MySQL
+	repo repo.Repo
 }
 
-func NewUser(db database.MySQL) User {
-	return User{Db: db}
+func NewUser(r repo.Repo) User {
+	return User{repo: r}
+}
+
+func password(password string) string {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return ""
+	}
+	return string(hash)
 }

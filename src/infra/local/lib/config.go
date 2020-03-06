@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"

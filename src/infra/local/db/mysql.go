@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"log"
 
-	v "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 type (
 	MySQL struct {
-		conn (*v.DB)
+		conn (*gorm.DB)
 	}
 )
 
@@ -31,7 +31,7 @@ func (s *MySQL) Connect(config map[string]string) {
 
 	CONNECT := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName, DbCharset)
 
-	db, err := v.Open(DBMS, CONNECT)
+	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		log.Fatal("DB error")
 	}

@@ -3,26 +3,22 @@
 package wire
 
 import (
-	handler "pandog/app/api/handler"
+	"pandog/app/api/handler"
 
-	ucPost "pandog/app/api/usecase/post"
+	ucAuth "pandog/app/api/usecase/auth"
 	ucUser "pandog/app/api/usecase/user"
 	database "pandog/interface/infra/db"
+	repo "pandog/repo"
 
 	"github.com/google/wire"
 )
 
 func UserHandlerLoader(db database.MySQL) handler.User {
-	wire.Build(handler.NewUser, ucUser.NewUser)
+	wire.Build(handler.NewUser, ucUser.NewUser, repo.NewRepo)
 	return handler.User{}
 }
 
-func PostHandlerLoader(db database.MySQL) handler.Post {
-	wire.Build(handler.NewPost, ucPost.NewPost)
-	return handler.Post{}
-}
-
 func AuthHandlerLoader(db database.MySQL) handler.Auth {
-	wire.Build(handler.NewAuth, ucUser.NewUser)
+	wire.Build(handler.NewAuth, ucAuth.NewAuth, repo.NewRepo)
 	return handler.Auth{}
 }

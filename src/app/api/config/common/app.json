@@ -1,6 +1,7 @@
 {
   "app": {
     "mode": 1,
-    "port": 4000
+    "port": 4000,
+    "salt": "d76141b32b4dd202ab94b029cf052f8a6603f454bec218def54bf3ea7080fc2d"
   }
 }
