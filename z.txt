@@ -4,3 +4,11 @@ docker exec -i admin-db mysql -uroot mall < mall.sql
 // inside container
 go get github.com/canthefason/go-watcher
 go install github.com/canthefason/go-watcher/cmd/watcher
+
+
+google wire:
+http://webcache.googleusercontent.com/search?q=cache:Eo0g0vBvDiAJ:claudioed.tech/2019/09/07/lets-go-dependency-injection-in-golang/&hl=en&gl=vn&strip=1&vwsrc=0
+https://github.com/google/wire/tree/master/_tutorial
+
+singleton
+https://medium.com/golang-issue/how-singleton-pattern-works-with-golang-2fdd61cd5a7f
