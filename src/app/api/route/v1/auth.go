@@ -15,7 +15,7 @@ func NewAuth(h handler.Auth) Auth {
 	return Auth{handler: h}
 }
 
-func (s *Auth) Route() []server.Route {
+func (s Auth) Route() []server.Route {
 	return []server.Route{
 		server.Route{
 			Method:   "POST",

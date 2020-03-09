@@ -2,7 +2,7 @@ package v1
 
 import (
 	"pandog/app/api/handler"
-	server "pandog/infra/local/server"
+	"pandog/infra/local/server"
 )
 
 type (
@@ -15,7 +15,7 @@ func NewUser(h handler.User) User {
 	return User{handler: h}
 }
 
-func (s *User) Route() []server.Route {
+func (s User) Route() []server.Route {
 	return []server.Route{
 		server.Route{
 			Method:   "GET",

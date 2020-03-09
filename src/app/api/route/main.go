@@ -4,42 +4,31 @@ import (
 	"strings"
 
 	"pandog/app/api/wire"
-	server "pandog/infra/local/server"
-	database "pandog/interface/infra/db"
+	"pandog/interface/infra/db"
+	"pandog/interface/route"
 
 	"github.com/gin-gonic/gin"
 )
 
 type (
 	Router struct {
-		db database.MySQL
+		db db.MySQL
 	}
 )
 
-func NewRouter(db database.MySQL) Router {
+func NewRouter(db db.MySQL) Router {
 	return Router{db: db}
 }
 
-func (s Router) Apply(app *gin.Engine) {
-	r := s.collect()
-
-	make(app, r)
-}
-
-func (s Router) collect() []server.Route {
-	r := []server.Route{}
-
-	user := wire.UserRouterLoader(s.db)
-	auth := wire.AuthRouterLoader(s.db)
-
-	r = append(r, (user.Route())...)
-	r = append(r, (auth.Route())...)
-
-	return r
-}
-
-func make(app *gin.Engine, routes []server.Route) {
+func (s *Router) Apply(app *gin.Engine) {
 	v1 := app.Group("v1")
+
+	collect(v1, wire.AuthRouterLoader(s.db))
+	collect(v1, wire.UserRouterLoader(s.db))
+}
+
+func collect(v1 *gin.RouterGroup, target route.Base) {
+	routes := target.Route()
 	for _, rt := range routes {
 		switch strings.ToUpper(rt.Method) {
 		case "GET":
