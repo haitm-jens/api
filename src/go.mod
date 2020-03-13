@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/canthefason/go-watcher v0.2.4 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect

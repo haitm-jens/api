@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"pandog/app/api/handler"
+	handler "pandog/app/api/handler/user"
 	"pandog/infra/local/server"
 )
 

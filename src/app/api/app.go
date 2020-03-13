@@ -42,5 +42,7 @@ func config() *lib.Config {
 	filepath := path.Join(path.Dir(filename))
 
 	root := filepath + "/config/common"
-	return lib.NewConfig(root)
+
+	c := lib.NewConfig()
+	return c.Root(root)
 }

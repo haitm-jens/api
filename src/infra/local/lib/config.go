@@ -15,12 +15,21 @@ type (
 	}
 )
 
-func NewConfig(root string) *Config {
-	return &Config{root: root}
+func NewConfig() *Config {
+	return &Config{}
+}
+
+func (s *Config) Root(root string) *Config {
+	s.root = root
+	return s
 }
 
 func (s *Config) Get(name string) string {
 	return viper.GetString(name)
+}
+
+func (s *Config) GetInt(name string) int {
+	return viper.GetInt(name)
 }
 
 func (s *Config) GetStringMapString(name string) map[string]string {
