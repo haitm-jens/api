@@ -5,23 +5,23 @@ import (
 )
 
 type (
-	context struct {
-		context *gin.Context
+	ctx struct {
+		c *gin.Context
 	}
 )
 
-func NewContext(c *gin.Context) *context {
-	return &context{context: c}
+func NewContext(c *gin.Context) *ctx {
+	return &ctx{c: c}
 }
 
-func (s *context) Get(key string) interface{} {
-	value, flag := s.context.Get(key)
+func (s *ctx) Get(key string) interface{} {
+	value, flag := s.c.Get(key)
 	if flag {
 		return value
 	}
 	return nil
 }
 
-func (s *context) FormData(data interface{}) {
-	s.context.BindJSON(data)
+func (s *ctx) FormData(data interface{}) {
+	s.c.BindJSON(data)
 }

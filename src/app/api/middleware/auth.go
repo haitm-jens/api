@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"pandog/app/api/lib/context"
+	"pandog/app/api/lib/ctx"
 	uc "pandog/app/api/usecase/user"
 	"pandog/infra/local/server/response"
 	"pandog/repo"
@@ -26,15 +26,16 @@ func Auth() gin.HandlerFunc {
 		}
 
 		uid := uint(t["uid"].(float64))
+		token := uint(t["token"].(float64))
+		check := verifyJwt(uid, token)
 
-		check := verifyUser(uid)
-		if !check {
-			c.Set("AUTH_USER_ID", uid)
+		if check {
+			ctx.PushEnv("AUTH_USER_ID", uid)
 			c.Next()
 			return
 		}
 
-		abort(c, errors.New("ERR_1001"))
+		abort(c, errors.New("ERR_10012"))
 	}
 }
 
@@ -51,7 +52,7 @@ func decodeJwt(jwtString string) (jwt.MapClaims, error) {
 			return nil, errors.New("ERR_1002")
 		}
 
-		c := context.NewConfig()
+		c := ctx.NewConfig()
 		salt := []byte(c.Get("auth.salt"))
 
 		return salt, nil
@@ -64,11 +65,15 @@ func decodeJwt(jwtString string) (jwt.MapClaims, error) {
 	return nil, err
 }
 
-func verifyUser(uid uint) bool {
-	db := context.NewDb()
+func verifyJwt(uid uint, token uint) bool {
+	db := ctx.NewDb()
 	repo := repo.NewRepo(db)
 	uc := uc.NewUser(repo)
 
 	target := uc.GetByID(uid)
-	return target != nil
+	if target == nil {
+		return false
+	}
+
+	return target.ConfirmedUnixtime == token
 }

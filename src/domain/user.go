@@ -3,8 +3,7 @@ package domain
 type User struct {
 	ID                uint
 	Email             string
-	EncryptedPassword string
-	ConfirmedUnixtime int
+	ConfirmedUnixtime uint
 }
 
 func (*User) TableName() string {

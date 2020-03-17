@@ -4,7 +4,7 @@ import (
 	"path"
 	"runtime"
 
-	"pandog/app/api/lib/context"
+	"pandog/app/api/lib/ctx"
 	"pandog/app/api/route"
 	"pandog/infra/local/lib"
 
@@ -22,8 +22,9 @@ func Dispatch() {
 	}
 
 	server := gin.New()
-
-	db := context.NewDb()
+	ctx.NewEnv()
+	
+	db := ctx.NewDb()
 	defer db.Disconnect()
 
 	r := route.NewRouter(db)
@@ -38,7 +39,7 @@ func config() *lib.Config {
 	_, filename, _, _ := runtime.Caller(1)
 	root := path.Join(path.Dir(filename), "config", "common")
 
-	c := context.NewConfig()
+	c := ctx.NewConfig()
 	c.Root(root)
 	c.LoadDir()
 

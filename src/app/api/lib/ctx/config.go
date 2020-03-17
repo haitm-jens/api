@@ -1,4 +1,4 @@
-package context
+package ctx
 
 import (
 	"sync"
@@ -12,7 +12,7 @@ var once_config sync.Once
 
 func NewConfig() *lib.Config {
 	once_config.Do(func() {
-		config = lib2.NewConfig()
+		config = lib.NewConfig()
 	})
 	return config
 }

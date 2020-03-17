@@ -3,7 +3,7 @@ package auth
 import (
 	"time"
 
-	ctx "pandog/app/api/lib/context"
+	"pandog/app/api/lib/ctx"
 	"pandog/domain"
 	"pandog/infra/local/server"
 	"pandog/infra/local/server/response"
@@ -23,7 +23,8 @@ type (
 	}
 
 	jwt struct {
-		Id uint `json:"uid"`
+		Id    uint `json:"uid"`
+		Token uint `json:"token"`
 		libJwt.StandardClaims
 	}
 )
@@ -39,7 +40,8 @@ func newJwt(target *domain.Auth) jwt {
 	lt := c.GetInt("auth.lifetime")
 
 	return jwt{
-		Id: target.ID,
+		Id:    target.ID,
+		Token: target.ConfirmedUnixtime,
 		StandardClaims: libJwt.StandardClaims{
 			ExpiresAt: time.Now().AddDate(0, lt, 0).Unix(),
 		},

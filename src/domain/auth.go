@@ -4,7 +4,7 @@ type Auth struct {
 	ID                uint
 	Email             string
 	EncryptedPassword string
-	ConfirmedUnixtime int
+	ConfirmedUnixtime uint
 }
 
 func (Auth) TableName() string {

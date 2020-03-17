@@ -1,6 +1,7 @@
 package user
 
 import (
+	"pandog/app/api/lib/ctx"
 	"pandog/domain"
 	"pandog/infra/local/server/response"
 
@@ -35,7 +36,9 @@ func toRes(u *domain.User) res {
 func (s *User) Get(c *gin.Context) {
 	r := response.NewJsonResponse(c)
 
-	target := s.uc.GetByID(55)
+	id := ctx.GetEnv("AUTH_USER_ID")
+	
+	target := s.uc.GetByID(id.(uint))
 	data := toRes(target)
 
 	r.Pass(data)
