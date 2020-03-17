@@ -1,13 +1,15 @@
 package user
 
-import usecase "pandog/app/api/usecase/user"
+import (
+	usecase "pandog/app/api/usecase/user"
+)
 
 type (
 	User struct {
-		Uc usecase.User
+		uc usecase.User
 	}
 )
 
 func NewUser(u usecase.User) User {
-	return User{Uc: u}
+	return User{uc: u}
 }

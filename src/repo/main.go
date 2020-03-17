@@ -15,7 +15,7 @@ func NewRepo(db db.MySQL) Repo {
 	return Repo{db: db}
 }
 
-func (r *Repo) GetById(target domain.Base, id int) {
+func (r *Repo) GetByID(target domain.Base, id uint) {
 	r.
 		Limit(1).
 		Where("id = ?", id).

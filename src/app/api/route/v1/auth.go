@@ -18,9 +18,10 @@ func NewAuth(h handler.Auth) Auth {
 func (s Auth) Route() []server.Route {
 	return []server.Route{
 		server.Route{
-			Method:   "POST",
-			URL:      "/auth/login",
-			Business: s.handler.Login,
+			Method:     "POST",
+			URL:        "/auth/login",
+			Business:   s.handler.Login,
+			Middleware: nil,
 		},
 	}
 }

@@ -1,17 +1,19 @@
 package api
 
 import (
+	"fmt"
 	"path"
 	"runtime"
 
+	lib2 "pandog/app/api/lib"
 	"pandog/app/api/route"
-	"pandog/infra/local/db"
 	"pandog/infra/local/lib"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Dispatch() {
+
 	c := config()
 	c.LoadDir()
 
@@ -24,11 +26,10 @@ func Dispatch() {
 
 	server := gin.New()
 
-	dbc := c.GetStringMapString("db")
-	db := db.NewMySQL(dbc)
-
+	db := lib2.NewDb()
+	fmt.Printf("h %v\n", db)
 	defer db.Disconnect()
-
+	fmt.Printf("h2 %v\n", lib2.NewConfig())
 	r := route.NewRouter(db)
 
 	r.Apply(server)

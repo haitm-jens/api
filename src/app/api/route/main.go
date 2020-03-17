@@ -32,9 +32,13 @@ func collect(v1 *gin.RouterGroup, target route.Base) {
 	for _, rt := range routes {
 		switch strings.ToUpper(rt.Method) {
 		case "GET":
-			v1.GET(rt.URL, rt.Business)
+			v1.
+				Use(rt.Middleware...).
+				GET(rt.URL, rt.Business)
 		case "POST":
-			v1.POST(rt.URL, rt.Business)
+			v1.
+				Use(rt.Middleware...).
+				POST(rt.URL, rt.Business)
 		case "PUT":
 		case "DELETE":
 		default:

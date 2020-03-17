@@ -22,3 +22,8 @@ func AuthHandlerLoader(db database.MySQL) hlAuth.Auth {
 	wire.Build(hlAuth.NewAuth, ucAuth.NewAuth, repo.NewRepo)
 	return hlAuth.Auth{}
 }
+
+func UserUseCaseLoader(db database.MySQL) ucUser.User {
+	wire.Build(ucUser.NewUser, repo.NewRepo)
+	return ucUser.User{}
+}

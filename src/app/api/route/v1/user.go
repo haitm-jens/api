@@ -2,7 +2,10 @@ package v1
 
 import (
 	handler "pandog/app/api/handler/user"
+	"pandog/app/api/middleware"
 	"pandog/infra/local/server"
+
+	"github.com/gin-gonic/gin"
 )
 
 type (
@@ -21,6 +24,9 @@ func (s User) Route() []server.Route {
 			Method:   "GET",
 			URL:      "users/me",
 			Business: s.handler.Get,
+			Middleware: []gin.HandlerFunc{
+				middleware.Auth(),
+			},
 		},
 	}
 }

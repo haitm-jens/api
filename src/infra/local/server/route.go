@@ -6,8 +6,9 @@ import (
 
 type (
 	Route struct {
-		Method   string
-		URL      string
-		Business gin.HandlerFunc
+		Method     string
+		URL        string
+		Business   gin.HandlerFunc
+		Middleware []gin.HandlerFunc
 	}
 )
