@@ -3,6 +3,7 @@ package lib
 import (
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -39,11 +40,11 @@ func (s *Config) GetStringMapString(name string) map[string]string {
 func (s *Config) LoadDir(args ...string) {
 	dir := s.root
 	if len(args) > 0 {
-		dir = dir + "/" + args[0]
+		dir = path.Join(dir, args[0])
 	}
 
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if info.IsDir() {
+		if info == nil || info.IsDir() {
 			return nil
 		}
 
@@ -59,11 +60,11 @@ func (s *Config) LoadDir(args ...string) {
 }
 
 func (s *Config) Load(name string, args ...string) {
-	path := s.root
+	dir := s.root
 	if len(args) > 0 {
-		path += "/" + args[0]
+		dir = path.Join(dir, args[0])
 	}
-	load(name, path)
+	load(name, dir)
 }
 
 func load(name string, dir string) {

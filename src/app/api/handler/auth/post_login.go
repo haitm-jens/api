@@ -3,7 +3,7 @@ package auth
 import (
 	"time"
 
-	"pandog/app/api/lib"
+	ctx "pandog/app/api/lib/context"
 	"pandog/domain"
 	"pandog/infra/local/server"
 	"pandog/infra/local/server/response"
@@ -23,7 +23,7 @@ type (
 	}
 
 	jwt struct {
-		Id uint `json:"user_id"`
+		Id uint `json:"uid"`
 		libJwt.StandardClaims
 	}
 )
@@ -35,7 +35,7 @@ func newRes(token string) res {
 }
 
 func newJwt(target *domain.Auth) jwt {
-	c := lib.NewConfig()
+	c := ctx.NewConfig()
 	lt := c.GetInt("auth.lifetime")
 
 	return jwt{
@@ -67,7 +67,7 @@ func (s *Auth) Login(c *gin.Context) {
 }
 
 func generateJwt(target *domain.Auth) string {
-	c := lib.NewConfig()
+	c := ctx.NewConfig()
 	salt := []byte(c.Get("auth.salt"))
 	lib := libJwt.NewWithClaims(libJwt.SigningMethodHS256, newJwt(target))
 	token, _ := lib.SignedString(salt)

@@ -1,11 +1,10 @@
 package api
 
 import (
-	"fmt"
 	"path"
 	"runtime"
 
-	lib2 "pandog/app/api/lib"
+	"pandog/app/api/lib/context"
 	"pandog/app/api/route"
 	"pandog/infra/local/lib"
 
@@ -13,9 +12,7 @@ import (
 )
 
 func Dispatch() {
-
 	c := config()
-	c.LoadDir()
 
 	switch c.Get("app.mode") {
 	case "1":
@@ -26,10 +23,9 @@ func Dispatch() {
 
 	server := gin.New()
 
-	db := lib2.NewDb()
-	fmt.Printf("h %v\n", db)
+	db := context.NewDb()
 	defer db.Disconnect()
-	fmt.Printf("h2 %v\n", lib2.NewConfig())
+
 	r := route.NewRouter(db)
 
 	r.Apply(server)
@@ -40,10 +36,11 @@ func Dispatch() {
 
 func config() *lib.Config {
 	_, filename, _, _ := runtime.Caller(1)
-	filepath := path.Join(path.Dir(filename))
+	root := path.Join(path.Dir(filename), "config", "common")
 
-	root := filepath + "/config/common"
+	c := context.NewConfig()
+	c.Root(root)
+	c.LoadDir()
 
-	c := lib.NewConfig()
-	return c.Root(root)
+	return c
 }

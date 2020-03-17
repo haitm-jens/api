@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	context "pandog/app/api/lib"
+	"pandog/app/api/lib/context"
 	uc "pandog/app/api/usecase/user"
 	"pandog/infra/local/server/response"
 	"pandog/repo"
@@ -25,7 +25,7 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
-		uid := uint(t["user_id"].(float64))
+		uid := uint(t["uid"].(float64))
 
 		check := verifyUser(uid)
 		if !check {
