@@ -16,3 +16,4 @@ WORKDIR /app
 
 ENV GOPATH /app/vendor
 ENV PATH ${GOPATH}/bin:${PATH}
+ENV TZ=Asia/Ho_Chi_Minh

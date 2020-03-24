@@ -1,8 +1,10 @@
 package api
 
 import (
+	"fmt"
 	"path"
 	"runtime"
+	"time"
 
 	"pandog/app/api/lib/ctx"
 	"pandog/app/api/route"
@@ -14,6 +16,7 @@ import (
 func Dispatch() {
 	c := config()
 
+	timezone(c.Get("app.timezone"))
 	switch c.Get("app.mode") {
 	case "1":
 		gin.SetMode(gin.DebugMode)
@@ -23,7 +26,7 @@ func Dispatch() {
 
 	server := gin.New()
 	ctx.NewEnv()
-	
+
 	db := ctx.NewDb()
 	defer db.Disconnect()
 
@@ -44,4 +47,16 @@ func config() *lib.Config {
 	c.LoadDir()
 
 	return c
+}
+
+func timezone(tz string) {
+	if tz != "" {
+		jst, err := time.LoadLocation(tz)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		time.Local = jst
+	}
+	// fmt.Println("now:", time.Local)
 }
